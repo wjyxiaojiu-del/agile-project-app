@@ -36,21 +36,39 @@ npx vite
 node server/index.js
 ```
 
+## 在线预览
+
+- **GitHub Pages**：https://wjyxiaojiu-del.github.io/agile-project-app/
+- **Vercel**：（见下方部署步骤）
+
 ## 部署
 
-本项目支持一键部署到 Vercel：
+### 方式一：Vercel Dashboard（推荐）
 
-1. Fork 本仓库
-2. 在 [Vercel](https://vercel.com) 中导入项目
-3. 添加环境变量 `POSTGRES_URL`（Vercel 会自动创建 Postgres 数据库）
-4. 部署完成后访问 `/api/seed` 初始化数据
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wjyxiaojiu-del/agile-project-app)
 
-或使用 Vercel CLI：
+1. 点击上方按钮，用 **GitHub 账号** 登录 Vercel
+2. 项目会自动导入并部署
+3. 进入项目 Dashboard → **Storage** → 创建 **Postgres** 数据库
+4. Vercel 会自动将 `POSTGRES_URL` 添加到环境变量
+5. 访问 `https://你的域名/api/seed` 初始化数据
+
+> 如果不用一键按钮，也可以手动去 [vercel.com](https://vercel.com) → Add New Project → 导入本仓库。
+
+### 方式二：Vercel CLI
 
 ```bash
 npm i -g vercel
+vercel login
 vercel --prod
 ```
+
+### 方式三：GitHub Pages（纯静态，无后端）
+
+已自动部署：每次 push 到 `master` 分支会自动构建。
+
+- 地址：https://wjyxiaojiu-del.github.io/agile-project-app/
+- 注意：GitHub Pages 仅托管前端静态页面，后端 API 和数据库不可用。
 
 ## 项目结构
 
