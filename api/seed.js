@@ -1,18 +1,18 @@
-import { ensureTables, sql, json } from './_db.js';
+import { ensureTables, run, json } from './_db.js';
 
 export default async function handler(req, res) {
   try {
     await ensureTables();
 
-    await sql`DELETE FROM milestones`;
-    await sql`DELETE FROM risks`;
-    await sql`DELETE FROM standup_logs`;
-    await sql`DELETE FROM tasks`;
-    await sql`DELETE FROM user_stories`;
-    await sql`DELETE FROM sprints`;
-    await sql`DELETE FROM projects`;
+    await run('DELETE FROM milestones');
+    await run('DELETE FROM risks');
+    await run('DELETE FROM standup_logs');
+    await run('DELETE FROM tasks');
+    await run('DELETE FROM user_stories');
+    await run('DELETE FROM sprints');
+    await run('DELETE FROM projects');
 
-    await sql`INSERT INTO projects (id, name, start_date, end_date) VALUES (1, '研途启航 - 2026级研究生入学准备全流程管理项目', '2026-06-01', '2026-07-26')`;
+    await run("INSERT INTO projects (id, name, start_date, end_date) VALUES (1, '研途启航 - 2026级研究生入学准备全流程管理项目', '2026-06-01', '2026-07-26')");
 
     const sprints = [
       [1, 1, 1, 'Sprint 1：入学筹备冲刺', '2026-06-01', '2026-06-14', '完成所有入学行政手续和生活准备，建立项目管理基础工具', 'planned'],
@@ -21,31 +21,31 @@ export default async function handler(req, res) {
       [4, 1, 4, 'Sprint 4：整装待发冲刺', '2026-07-13', '2026-07-26', '完成项目全面复盘，优化个人学术展示，产出标准化项目经历', 'planned'],
     ];
     for (const s of sprints) {
-      await sql`INSERT INTO sprints (id, project_id, number, name, start_date, end_date, goal, status) VALUES (${s[0]}, ${s[1]}, ${s[2]}, ${s[3]}, ${s[4]}, ${s[5]}, ${s[6]}, ${s[7]})`;
+      await run('INSERT INTO sprints (id, project_id, number, name, start_date, end_date, goal, status) VALUES (?,?,?,?,?,?,?,?)', s);
     }
 
     const stories = [
-      ['US-001', 1, '入学材料清单梳理', '一次性梳理出完整的入学所需材料清单', 'P0', 3, 1, 'todo', '清单包含证件类、档案类、照片类、费用类'],
-      ['US-002', 1, '证件材料准备', '提前准备好身份证、录取通知书、户口迁移证等', 'P0', 5, 1, 'todo', '所有Must Have材料已备齐并拍照留底'],
-      ['US-003', 1, '录取后续手续办理', '完成政审、档案邮寄、党团关系转接等', 'P0', 5, 1, 'todo', '政审表已盖章、档案已邮寄、党团关系已转出'],
-      ['US-004', 1, '导师首次沟通', '在入学前与导师进行首次正式沟通', 'P0', 3, 2, 'todo', '产出沟通纪要'],
-      ['US-005', 1, '研究方向初步确认', '与导师讨论后初步确定研究方向', 'P0', 5, 2, 'todo', '产出研究方向初步规划文档'],
-      ['US-006', 1, '住宿与生活准备', '提前了解学校住宿条件并做好生活准备', 'P0', 3, 1, 'todo', '住宿确认完成，生活用品清单已备齐'],
-      ['US-007', 1, '核心文献阅读（第1本）', '阅读导师推荐的第1本核心文献', 'P1', 8, 2, 'todo', '产出读书笔记≥2000字'],
-      ['US-008', 1, '核心文献阅读（第2本）', '阅读第2本核心文献', 'P1', 8, 3, 'todo', '产出读书笔记含对比分析'],
-      ['US-009', 1, '核心文献阅读（第3本）', '阅读第3本核心文献', 'P1', 8, 3, 'todo', '产出读书笔记含知识图谱'],
-      ['US-010', 1, '学习文献管理工具', '学会使用Zotero进行文献管理', 'P1', 5, 2, 'todo', '导入10篇文献并分类'],
-      ['US-011', 1, '学习笔记工具', '学会使用Obsidian搭建个人知识库', 'P1', 5, 2, 'todo', '建立3个分类模块，录入10+条笔记'],
-      ['US-012', 1, '学术写作工具', '学会使用LaTeX或Word高级排版', 'P1', 5, 3, 'todo', '产出格式规范的模板文档'],
-      ['US-013', 1, '数据处理工具', '学会使用Python进行基础数据处理', 'P1', 5, 3, 'todo', '完成数据集的清洗分析可视化'],
-      ['US-014', 1, '学习文献检索方法', '掌握CNKI、Web of Science高级检索', 'P1', 3, 2, 'todo', '建立20+篇文献检索结果集'],
-      ['US-015', 1, '学术社交网络搭建', '关注研究领域内的核心学者和团队', 'P2', 3, 4, 'todo', '关注10位核心学者，订阅3个期刊'],
-      ['US-016', 1, '跨专业课程了解', '了解培养方案中的课程设置', 'P2', 3, 3, 'todo', '产出课程规划表'],
-      ['US-017', 1, '同届同学社群融入', '加入同届研究生的交流群组', 'P2', 2, 1, 'todo', '加入2个群组，认识5位同学'],
-      ['US-018', 1, '个人简历与学术主页优化', '更新个人简历', 'P2', 3, 4, 'todo', '简历已更新'],
+      ['US-001', 1, '入学材料清单梳理', '一次性梳理出完整的入学所需材料清单', 'S', 3, 1, 'todo', '清单包含证件类、档案类、照片类、费用类'],
+      ['US-002', 1, '证件材料准备', '提前准备好身份证、录取通知书、户口迁移证等', 'S', 5, 1, 'todo', '所有Must Have材料已备齐并拍照留底'],
+      ['US-003', 1, '录取后续手续办理', '完成政审、档案邮寄、党团关系转接等', 'S', 5, 1, 'todo', '政审表已盖章、档案已邮寄、党团关系已转出'],
+      ['US-004', 1, '导师首次沟通', '在入学前与导师进行首次正式沟通', 'S', 3, 2, 'todo', '产出沟通纪要'],
+      ['US-005', 1, '研究方向初步确认', '与导师讨论后初步确定研究方向', 'S', 5, 2, 'todo', '产出研究方向初步规划文档'],
+      ['US-006', 1, '住宿与生活准备', '提前了解学校住宿条件并做好生活准备', 'S', 3, 1, 'todo', '住宿确认完成，生活用品清单已备齐'],
+      ['US-007', 1, '核心文献阅读（第1本）', '阅读导师推荐的第1本核心文献', 'A', 8, 2, 'todo', '产出读书笔记≥2000字'],
+      ['US-008', 1, '核心文献阅读（第2本）', '阅读第2本核心文献', 'A', 8, 3, 'todo', '产出读书笔记含对比分析'],
+      ['US-009', 1, '核心文献阅读（第3本）', '阅读第3本核心文献', 'A', 8, 3, 'todo', '产出读书笔记含知识图谱'],
+      ['US-010', 1, '学习文献管理工具', '学会使用Zotero进行文献管理', 'A', 5, 2, 'todo', '导入10篇文献并分类'],
+      ['US-011', 1, '学习笔记工具', '学会使用Obsidian搭建个人知识库', 'A', 5, 2, 'todo', '建立3个分类模块，录入10+条笔记'],
+      ['US-012', 1, '学术写作工具', '学会使用LaTeX或Word高级排版', 'A', 5, 3, 'todo', '产出格式规范的模板文档'],
+      ['US-013', 1, '数据处理工具', '学会使用Python进行基础数据处理', 'A', 5, 3, 'todo', '完成数据集的清洗分析可视化'],
+      ['US-014', 1, '学习文献检索方法', '掌握CNKI、Web of Science高级检索', 'A', 3, 2, 'todo', '建立20+篇文献检索结果集'],
+      ['US-015', 1, '学术社交网络搭建', '关注研究领域内的核心学者和团队', 'B', 3, 4, 'todo', '关注10位核心学者，订阅3个期刊'],
+      ['US-016', 1, '跨专业课程了解', '了解培养方案中的课程设置', 'B', 3, 3, 'todo', '产出课程规划表'],
+      ['US-017', 1, '同届同学社群融入', '加入同届研究生的交流群组', 'B', 2, 1, 'todo', '加入2个群组，认识5位同学'],
+      ['US-018', 1, '个人简历与学术主页优化', '更新个人简历', 'B', 3, 4, 'todo', '简历已更新'],
     ];
     for (const s of stories) {
-      await sql`INSERT INTO user_stories (story_id, project_id, title, description, priority, story_points, sprint_id, status, acceptance_criteria) VALUES (${s[0]}, ${s[1]}, ${s[2]}, ${s[3]}, ${s[4]}, ${s[5]}, ${s[6]}, ${s[7]}, ${s[8]})`;
+      await run('INSERT INTO user_stories (story_id, project_id, title, description, priority, story_points, sprint_id, status, acceptance_criteria) VALUES (?,?,?,?,?,?,?,?,?)', s);
     }
 
     const tasks = [
@@ -85,7 +85,7 @@ export default async function handler(req, res) {
       [2, '建立检索结果集', 'todo', 20, '2026-06-21'],
     ];
     for (const t of tasks) {
-      await sql`INSERT INTO tasks (sprint_id, title, status, sort_order, due_date) VALUES (${t[0]}, ${t[1]}, ${t[2]}, ${t[3]}, ${t[4]})`;
+      await run('INSERT INTO tasks (sprint_id, title, status, sort_order, due_date) VALUES (?,?,?,?,?)', t);
     }
 
     const risks = [
@@ -96,7 +96,7 @@ export default async function handler(req, res) {
       [1, '生活突发事件打乱计划', '家庭事务、身体健康等突发事件', 3, 2, 'low', '每Sprint预留1天缓冲时间', 'monitoring'],
     ];
     for (const r of risks) {
-      await sql`INSERT INTO risks (project_id, title, description, probability, impact, level, strategy, status) VALUES (${r[0]}, ${r[1]}, ${r[2]}, ${r[3]}, ${r[4]}, ${r[5]}, ${r[6]}, ${r[7]})`;
+      await run('INSERT INTO risks (project_id, title, description, probability, impact, level, strategy, status) VALUES (?,?,?,?,?,?,?,?)', r);
     }
 
     const milestones = [
@@ -106,16 +106,8 @@ export default async function handler(req, res) {
       [1, 'M4：项目完整交付', '2026-07-26', 'pending', '全部交付物产出，简历可用'],
     ];
     for (const m of milestones) {
-      await sql`INSERT INTO milestones (project_id, name, due_date, status, criteria) VALUES (${m[0]}, ${m[1]}, ${m[2]}, ${m[3]}, ${m[4]})`;
+      await run('INSERT INTO milestones (project_id, name, due_date, status, criteria) VALUES (?,?,?,?,?)', m);
     }
-
-    // Reset sequences
-    await sql`SELECT setval('projects_id_seq', 1)`;
-    await sql`SELECT setval('sprints_id_seq', 4)`;
-    await sql`SELECT setval('user_stories_id_seq', 18)`;
-    await sql`SELECT setval('tasks_id_seq', 34)`;
-    await sql`SELECT setval('risks_id_seq', 5)`;
-    await sql`SELECT setval('milestones_id_seq', 4)`;
 
     json(res, { ok: true, message: 'Seed data inserted successfully' });
   } catch (e) {

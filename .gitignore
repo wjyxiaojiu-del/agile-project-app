@@ -6,3 +6,5 @@ server/data.db
 Thumbs.db
 .env
 .env.local
+
+.vercel
