@@ -23,7 +23,7 @@
 | 图表 | Recharts |
 | 图标 | Lucide React |
 | 后端 | Vercel Serverless Functions (Node.js) |
-| 数据库 | SQLite (sql.js) |
+| 数据库 | Turso (SQLite 云) / 本地 sql.js |
 | 部署 | Vercel |
 | 样式 | Apple 风格毛玻璃 (Glassmorphism) |
 
@@ -63,7 +63,11 @@ node server/index.js
 
 1. 点击上方按钮，用 GitHub 账号登录 Vercel
 2. 项目会自动导入并部署
-3. 访问 `/api/seed` 初始化预置数据
+3. 注册 [Turso](https://turso.tech) 并创建数据库（Region 选 Hong Kong）
+4. 在 Vercel 项目 Settings → Environment Variables 中添加：
+   - `TURSO_DATABASE_URL` — Turso 数据库 URL
+   - `TURSO_AUTH_TOKEN` — Turso 认证 Token
+5. 访问 `/api/seed` 初始化预置数据
 
 ### Vercel CLI
 
