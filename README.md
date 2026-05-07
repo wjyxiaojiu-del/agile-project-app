@@ -35,7 +35,10 @@
 
 ## 在线预览
 
-**Vercel**: https://agile-project-app-master.vercel.app
+| 平台 | 地址 | 说明 |
+|------|------|------|
+| Vercel | https://agile-project-app-master.vercel.app | 完整功能（含后端 API） |
+| GitHub Pages | https://wjyxiaojiu-del.github.io/agile-project-app/ | 仅静态页面，无后端 |
 
 ## 本地开发
 
