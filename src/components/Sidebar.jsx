@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, ListTodo, Columns3, CalendarRange, MessageSquare, AlertTriangle, FileText, GraduationCap, Sparkles } from 'lucide-react';
+import { LayoutDashboard, ListTodo, Columns3, CalendarRange, MessageSquare, AlertTriangle, FileText, GraduationCap, Sparkles, Bot, BookOpen, Users } from 'lucide-react';
 import { useProject } from '../context/ProjectContext';
 import api from '../api';
 
@@ -12,6 +12,9 @@ const links = [
   { to: '/standup', icon: MessageSquare, label: '每日日程' },
   { to: '/risks', icon: AlertTriangle, label: '风险管控' },
   { to: '/report', icon: FileText, label: '项目报告' },
+  { to: '/literature', icon: BookOpen, label: '文献知识库' },
+  { to: '/meetings', icon: Users, label: '导师沟通' },
+  { to: '/ai', icon: Bot, label: 'AI 助手' },
 ];
 
 export default function Sidebar() {

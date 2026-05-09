@@ -84,6 +84,24 @@ const api = {
   createMilestone: (data) => request('/milestones', { method: 'POST', body: JSON.stringify(data) }),
   updateMilestone: (id, data) => request(`/milestones?id=${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteMilestone: (id) => request(`/milestones?id=${id}`, { method: 'DELETE' }),
+
+  // Literature
+  getLiterature: (params = {}) => {
+    const qs = new URLSearchParams(params).toString();
+    return request(`/literature${qs ? '?' + qs : ''}`);
+  },
+  createLiterature: (data) => request('/literature', { method: 'POST', body: JSON.stringify(data) }),
+  updateLiterature: (id, data) => request(`/literature?id=${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteLiterature: (id) => request(`/literature?id=${id}`, { method: 'DELETE' }),
+
+  // Meetings
+  getMeetings: (params = {}) => {
+    const qs = new URLSearchParams(params).toString();
+    return request(`/meetings${qs ? '?' + qs : ''}`);
+  },
+  createMeeting: (data) => request('/meetings', { method: 'POST', body: JSON.stringify(data) }),
+  updateMeeting: (id, data) => request(`/meetings?id=${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteMeeting: (id) => request(`/meetings?id=${id}`, { method: 'DELETE' }),
 };
 
 export default api;

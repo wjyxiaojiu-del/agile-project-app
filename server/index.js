@@ -8,6 +8,9 @@ import sprintsRouter from './routes/sprints.js';
 import standupsRouter from './routes/standups.js';
 import risksRouter from './routes/risks.js';
 import milestonesRouter from './routes/milestones.js';
+import literatureRouter from './routes/literature.js';
+import meetingsRouter from './routes/meetings.js';
+import exportRouter from './routes/export.js';
 
 const app = express();
 const PORT = 3001;
@@ -22,6 +25,9 @@ app.use('/api/sprints', sprintsRouter);
 app.use('/api/standups', standupsRouter);
 app.use('/api/risks', risksRouter);
 app.use('/api/milestones', milestonesRouter);
+app.use('/api/literature', literatureRouter);
+app.use('/api/meetings', meetingsRouter);
+app.use('/api/export', exportRouter);
 
 // Error handler - prevents crashes from silently failing
 app.use((err, req, res, next) => {

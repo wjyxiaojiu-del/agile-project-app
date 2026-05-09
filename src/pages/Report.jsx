@@ -84,6 +84,11 @@ export default function Report() {
     toast.success('报告已导出');
   };
 
+  const handleExportMarkdown = () => {
+    window.open(`/api/export/markdown?project_id=${projectId}`, '_blank');
+    toast.success('Markdown 报告已导出');
+  };
+
   if (loading) return (
     <div className="space-y-6 max-w-[1400px]">
       <div className="h-8 w-32 bg-slate-200/50 rounded-lg animate-pulse" />
@@ -102,9 +107,14 @@ export default function Report() {
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">项目报告</h1>
           <p className="text-sm text-slate-400 mt-1">自动生成的项目概况与复盘数据</p>
         </div>
-        <button onClick={handleExport} className="btn btn-primary">
-          <Download size={16} /> 导出报告
-        </button>
+        <div className="flex gap-2">
+          <button onClick={handleExport} className="btn btn-secondary">
+            <Download size={16} /> 导出 TXT
+          </button>
+          <button onClick={handleExportMarkdown} className="btn btn-primary">
+            <Download size={16} /> 导出 Markdown
+          </button>
+        </div>
       </div>
 
       {/* Overview Stats */}

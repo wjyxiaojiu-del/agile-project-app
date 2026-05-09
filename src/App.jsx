@@ -12,6 +12,9 @@ const SprintPlan = lazy(() => import('./pages/SprintPlan'));
 const Standup = lazy(() => import('./pages/Standup'));
 const Risks = lazy(() => import('./pages/Risks'));
 const Report = lazy(() => import('./pages/Report'));
+const AIAssistant = lazy(() => import('./pages/AIAssistant'));
+const Literature = lazy(() => import('./pages/Literature'));
+const Meetings = lazy(() => import('./pages/Meetings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function PageLoader() {
@@ -44,6 +47,9 @@ export default function App() {
                   <Route path="/standup" element={<Standup />} />
                   <Route path="/risks" element={<Risks />} />
                   <Route path="/report" element={<Report />} />
+                  <Route path="/ai" element={<AIAssistant />} />
+                  <Route path="/literature" element={<Literature />} />
+                  <Route path="/meetings" element={<Meetings />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

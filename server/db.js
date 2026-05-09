@@ -115,6 +115,40 @@ function createTables() {
       FOREIGN KEY (project_id) REFERENCES projects(id)
     )
   `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS literature (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      authors TEXT,
+      journal TEXT,
+      year INTEGER,
+      doi TEXT,
+      abstract TEXT,
+      notes TEXT,
+      tags TEXT,
+      rating INTEGER DEFAULT 0,
+      status TEXT DEFAULT 'unread',
+      file_url TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      FOREIGN KEY (project_id) REFERENCES projects(id)
+    )
+  `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS meetings (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
+      mentor_name TEXT,
+      meeting_date TEXT NOT NULL,
+      topic TEXT,
+      summary TEXT,
+      action_items TEXT,
+      next_meeting TEXT,
+      notes TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      FOREIGN KEY (project_id) REFERENCES projects(id)
+    )
+  `);
 }
 
 // Debounced save: batch multiple writes within 500ms into a single disk write
